@@ -1,14 +1,10 @@
-// VERSI FINAL - 
 import React, { useState } from 'react';
-
-// IMPORT YANG BENAR
 import { 
   Microscope, Upload, Scan, FlaskConical, Layers, Sun, Moon, 
   Info, CheckCircle2, AlertTriangle, Grid, Target, Component, XCircle 
 } from 'lucide-react';
 
 export default function AmbasaltApp() {
-  // API Key Tertanam
   const [apiKey] = useState('AIzaSyAdnyhrhM6-L15i3gFqyxc7Po9vx28zrOQ');
   
   const [pplImage, setPplImage] = useState(null);
@@ -204,5 +200,3 @@ export default function AmbasaltApp() {
     </div>
   );
 }
-
-
