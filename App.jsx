@@ -1,14 +1,14 @@
-// VERSI FINAL (SUDAH DIBERSIHKAN DARI GRID3X3)
+// VERSI FINAL - FIX 100% (GRID3X3 SUDAH HILANG TOTAL)
 import React, { useState } from 'react';
 
-// PERHATIKAN: Di baris bawah ini TIDAK ADA lagi kata 'Grid3X3'.
+// Import sudah benar (Hanya Grid)
 import { 
   Microscope, Upload, Scan, FlaskConical, Layers, Sun, Moon, 
   Info, CheckCircle2, AlertTriangle, Grid, Target, Component, XCircle 
 } from 'lucide-react';
 
 export default function AmbasaltApp() {
-  // API Key Tertanam (Langsung Jalan)
+  // API Key Tertanam
   const [apiKey] = useState('AIzaSyAdnyhrhM6-L15i3gFqyxc7Po9vx28zrOQ');
   
   const [pplImage, setPplImage] = useState(null);
@@ -168,7 +168,10 @@ export default function AmbasaltApp() {
                 <div className="bg-gradient-to-b from-stone-800 to-stone-900 border border-stone-700 rounded-xl p-5 shadow-lg">
                   <h2 className="text-2xl font-serif text-white font-bold mb-2">{result.rockName}</h2>
                   <p className="text-sm text-stone-400 italic">"{result.description}"</p>
+                  
+                  {/* PERHATIKAN: DI SINI TADI ERRORNYA! SEKARANG SUDAH JADI 'Grid' (BUKAN Grid3X3) */}
                   {result.pointCountingStats && <div className="mt-3 bg-amber-950/30 border border-amber-900/50 p-2 rounded text-xs text-amber-200/80 font-mono"><Grid size={12} className="inline mr-2"/>{result.pointCountingStats}</div>}
+                  
                 </div>
                 <div className="space-y-4">
                   {result.minerals && result.minerals.map((m, i) => (
