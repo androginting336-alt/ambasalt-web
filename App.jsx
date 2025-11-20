@@ -4,10 +4,10 @@ import {
   Info, CheckCircle2, AlertTriangle, Grid, Target, Component, XCircle 
 } from 'lucide-react';
 
-// --- PERBAIKAN: Ikon 'Grid3X3' diganti jadi 'Grid' agar tidak error di Vercel ---
+// --- PERBAIKAN: Menggunakan ikon 'Grid' biasa agar tidak error di Vercel ---
 
 export default function AmbasaltApp() {
-  // --- KUNCI API SUDAH TERTANAM (Aman untuk Deploy) ---
+  // --- KUNCI API TERTANAM (Langsung Jalan) ---
   const [apiKey] = useState('AIzaSyAdnyhrhM6-L15i3gFqyxc7Po9vx28zrOQ');
   
   const [pplImage, setPplImage] = useState(null);
@@ -17,6 +17,8 @@ export default function AmbasaltApp() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  
+  // State Point Counting
   const [usePointCounting, setUsePointCounting] = useState(false);
 
   // Handlers
@@ -53,9 +55,9 @@ export default function AmbasaltApp() {
     setErrorMsg(null);
 
     try {
-      // Instruksi Point Counting tapi Tampilan V3
+      // Instruksi untuk AI
       const countingInstruction = usePointCounting 
-        ? "LAKUKAN 'VIRTUAL POINT COUNTING': Bagi gambar menjadi grid virtual. Hitung persentase mineral di setiap area grid untuk akurasi tinggi."
+        ? "LAKUKAN 'VIRTUAL POINT COUNTING' (Hitung Titik Virtual): Bagi gambar menjadi grid imajiner. Hitung persentase mineral di setiap kotak grid untuk akurasi tinggi."
         : "Estimasi persentase mineral secara visual umum.";
 
       const contentParts = [
@@ -73,7 +75,7 @@ export default function AmbasaltApp() {
       if (pplBase64) contentParts.push({ inline_data: { mime_type: "image/jpeg", data: pplBase64 } });
       if (xplBase64) contentParts.push({ inline_data: { mime_type: "image/jpeg", data: xplBase64 } });
 
-      // Menggunakan Model Gemini 2.5 Flash
+      // Menggunakan Model Gemini 2.5 Flash (Preview)
       const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -98,6 +100,7 @@ export default function AmbasaltApp() {
     }
   };
 
+  // Grid Overlay dengan ikon kotak biasa
   const GridOverlay = () => (
     <div className="absolute inset-0 grid grid-cols-4 grid-rows-4 pointer-events-none z-20 opacity-40">
       {[...Array(16)].map((_, i) => (
@@ -137,6 +140,7 @@ export default function AmbasaltApp() {
             <div className="flex justify-between items-center mb-6">
                 <h2 className="text-lg font-medium text-stone-400 flex items-center gap-2"><Layers size={18} className="text-amber-600" /> Meja Mikroskop</h2>
                 <button onClick={() => setUsePointCounting(!usePointCounting)} className={`text-xs flex items-center gap-2 px-3 py-1.5 rounded-lg border transition-all ${usePointCounting ? 'bg-amber-900/40 border-amber-600 text-amber-400' : 'bg-stone-800 border-stone-700 text-stone-500'}`}>
+                    {/* Ikon Grid Biasa */}
                     <Grid size={14} /> {usePointCounting ? 'Grid On' : 'Grid Off'}
                 </button>
             </div>
@@ -169,7 +173,7 @@ export default function AmbasaltApp() {
           </div>
         </div>
 
-        {/* KANAN: HASIL (Tampilan V3.0 - Kartu/List) */}
+        {/* KANAN: HASIL (Gaya V3.0 - Kartu Mineral Gelap) */}
         <div className="lg:col-span-7">
           <div className="bg-stone-900 border border-stone-800 rounded-2xl min-h-[600px] flex flex-col relative overflow-hidden shadow-xl">
             <div className="bg-stone-950 p-4 border-b border-stone-800 flex justify-between items-center"><span className="text-xs font-mono text-amber-600 flex items-center gap-2"><FlaskConical size={14} /> HASIL LAB</span></div>
@@ -180,23 +184,30 @@ export default function AmbasaltApp() {
             
             {result && !loading && (
               <div className="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
+                
                 {/* Header Batuan */}
                 <div className="bg-gradient-to-b from-stone-800 to-stone-900 border border-stone-700 rounded-xl p-5 shadow-lg">
+                  <div className="flex items-center gap-2 mb-1 text-amber-500 text-xs font-bold uppercase tracking-wider">
+                    <Component size={12} /> Identifikasi Batuan
+                  </div>
                   <h2 className="text-2xl font-serif text-white font-bold mb-2">{result.rockName}</h2>
                   <p className="text-sm text-stone-400 italic">"{result.description}"</p>
                   {result.pointCountingStats && <div className="mt-3 bg-amber-950/30 border border-amber-900/50 p-2 rounded text-xs text-amber-200/80 font-mono"><Grid size={12} className="inline mr-2"/>{result.pointCountingStats}</div>}
                 </div>
 
-                {/* Daftar Mineral (Gaya V3.0) */}
+                {/* Daftar Mineral (Kartu Gelap V3) */}
                 <div className="space-y-4">
                   {result.minerals && result.minerals.map((m, i) => (
                     <div key={i} className="bg-stone-950 border border-stone-800 rounded-lg overflow-hidden hover:border-amber-900/30 transition-colors">
+                      
+                      {/* Header Kartu Mineral */}
                       <div className="bg-stone-900 px-4 py-3 flex justify-between items-center border-b border-stone-800">
                         <div><h3 className="text-amber-100 font-bold text-lg">{m.name}</h3><span className="text-xs text-stone-500">{m.formula}</span></div>
                         <div className="bg-amber-950/40 text-amber-500 px-3 py-1 rounded text-sm font-bold">{m.percentage}</div>
                       </div>
+
+                      {/* Isi Kartu */}
                       <div className="p-4">
-                         {/* Grid Sifat Optik */}
                          <div className="grid grid-cols-2 gap-px bg-stone-800/50 border border-stone-800 rounded mb-4 overflow-hidden">
                            <div className="bg-stone-900/80 p-3">
                              <span className="block text-[10px] uppercase text-stone-500 font-bold mb-1">Relief</span>
