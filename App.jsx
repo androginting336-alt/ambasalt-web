@@ -1,4 +1,4 @@
-// VERSI FINAL - SUDAH DIBERSIHKAN TOTAL DARI ERROR GRID3X3
+// VERSI FINAL - 
 import React, { useState } from 'react';
 
 // IMPORT YANG BENAR: Menggunakan 'Grid' (Bukan Grid3X3)
@@ -204,3 +204,4 @@ export default function AmbasaltApp() {
     </div>
   );
 }
+
