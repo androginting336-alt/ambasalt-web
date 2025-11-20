@@ -1,7 +1,7 @@
 // VERSI FINAL - 
 import React, { useState } from 'react';
 
-// IMPORT YANG BENAR: Menggunakan 'Grid' (Bukan Grid3X3)
+// IMPORT YANG BENAR
 import { 
   Microscope, Upload, Scan, FlaskConical, Layers, Sun, Moon, 
   Info, CheckCircle2, AlertTriangle, Grid, Target, Component, XCircle 
@@ -204,4 +204,5 @@ export default function AmbasaltApp() {
     </div>
   );
 }
+
 
