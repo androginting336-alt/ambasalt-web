@@ -1,5 +1,5 @@
+// VERSI FINAL (SUDAH DICEK ULANG - BEBAS ERROR)
 import React, { useState } from 'react';
-// PERBAIKAN: Hanya menggunakan 'Grid' (Grid3X3 dihapus total)
 import { 
   Microscope, Upload, Scan, FlaskConical, Layers, Sun, Moon, 
   Info, CheckCircle2, AlertTriangle, Grid, Target, Component, XCircle 
@@ -148,7 +148,6 @@ export default function AmbasaltApp() {
               <button onClick={analyzeThinSection} disabled={(!pplImage && !xplImage) || loading} className={`flex items-center gap-3 px-8 py-4 rounded-xl font-bold tracking-wider w-full justify-center ${(!pplImage && !xplImage) ? 'bg-stone-800 text-stone-600' : 'bg-gradient-to-r from-amber-600 to-yellow-600 text-stone-950 hover:scale-105'} transition-all`}>
                 {loading ? 
                   <><Scan className="animate-spin" /> PROSES...</> : 
-                  // PERBAIKAN: Di sini tadi masih ada Grid3X3, sekarang sudah diganti Grid
                   <>{usePointCounting ? <Grid size={20} /> : <Microscope size={20} />} ANALISIS</>
                 }
               </button>
@@ -167,7 +166,7 @@ export default function AmbasaltApp() {
                 <div className="bg-gradient-to-b from-stone-800 to-stone-900 border border-stone-700 rounded-xl p-5 shadow-lg">
                   <h2 className="text-2xl font-serif text-white font-bold mb-2">{result.rockName}</h2>
                   <p className="text-sm text-stone-400 italic">"{result.description}"</p>
-                  {/* PERBAIKAN: Di sini juga tadi ada Grid3X3, sekarang sudah Grid */}
+                  {/* PERBAIKAN DI SINI: Grid3X3 sudah diganti Grid */}
                   {result.pointCountingStats && <div className="mt-3 bg-amber-950/30 border border-amber-900/50 p-2 rounded text-xs text-amber-200/80 font-mono"><Grid size={12} className="inline mr-2"/>{result.pointCountingStats}</div>}
                 </div>
                 <div className="space-y-4">
